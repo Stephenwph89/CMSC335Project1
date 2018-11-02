@@ -1,0 +1,284 @@
+/**
+*Stephen Hamilton
+*Class: CMSC 335
+*Section: 7981
+*Instructor: Dinsoreanu, Mihaela
+*Assignment: Project 1 Sea Port
+*Date Started: 10/27/2018
+*Due Date: 11/04/2018
+*/
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ *
+ * 
+ */
+public class World extends Thing {
+    
+        //Made Array for the ports with in File
+	ArrayList <SeaPortCMSC335> ports = new ArrayList <SeaPortCMSC335>();
+        //Instance of port time for port time class
+	PortTime porttime;
+	
+        //scanner for class world. Method returns true
+        // if another line in the input of the scanner
+	public World(Scanner scanIn) {
+            //invokes super class constructor
+		super();
+		while(scanIn.hasNextLine()) {
+			process(scanIn.nextLine());
+		}
+	}
+	//toString method
+	public String toString() {//used to transform object to string
+            //String method for world
+		String stringWorld = "\n\n------- The World -------";
+		if(ports.size() == 0) {
+                    //retun world
+			return stringWorld;
+		} 
+                //transforming port to string
+		for(SeaPortCMSC335 port: ports) {
+			stringWorld += port;
+		}
+		return stringWorld;
+	}//end toSttring() Method
+	//Scanner for String World
+	public void process(String stringWorld) {
+            // to scan information for stringWorld
+        Scanner scanCase = new Scanner(stringWorld);
+        if(!scanCase.hasNext()) {
+            return;
+        }//end scan
+        //Switch Case checking if variables are equal to values for person,pship,cship,port,dock,job
+        //This switch case checks for values in the file itself as well
+        switch(scanCase.next()) {
+            //person case
+            case "person":
+                setPerson(scanCase); break;
+            //job case
+            case "job":
+                setJob(scanCase); break;
+            //cship case
+            case "cship":
+                setCargoShip(scanCase); break;
+            //pship case    
+            case "pship":
+                setPassengerShip(scanCase); break;
+            //port case    
+            case "port":
+                setPort(scanCase); break;
+            //dock case    
+            case "dock":
+                setDock(scanCase); break;
+            default: break;
+        }
+    } // end switch case
+	//addins port for scanner
+	public void setPort(Scanner scanCase) {
+            //ports added to saeport for scan
+		ports.add(new SeaPortCMSC335(scanCase));
+	}
+	// set dock method
+	public void setDock(Scanner scanCase) {
+            //method for dock for scanCase
+		Dock mainDock = new Dock(scanCase);
+                //loop for dock / ports in scanner
+		for(SeaPortCMSC335 multiSeaPort: ports) {
+			if(multiSeaPort.index == mainDock.parent) {
+				multiSeaPort.docks.add(mainDock);
+			}
+		}
+	}
+	//set pship method
+	public void setPassengerShip(Scanner scanCase) {
+            //pship to scanCase
+        PassengerShip pShip = new PassengerShip(scanCase); 
+        //assign pShip
+        assignShip(pShip);
+    } // end method 
+	//set cargo ship method
+	public void setCargoShip(Scanner scanCase) {
+           // cship to scan
+        CargoShip cShip = new CargoShip(scanCase);
+        //assign to cship
+        assignShip(cShip);
+    } // end method
+	// set person method 4 scanner
+	public void setPerson(Scanner scanCase) {
+            //person to scan case
+        Person tempPerson = new Person(scanCase);
+        for(SeaPortCMSC335 multiSeaPort: ports) {
+            if(multiSeaPort.index == tempPerson.parent) {
+                multiSeaPort.person.add(tempPerson);
+            }
+        }
+    } // end method 
+	//set job method to scanner
+	public void setJob(Scanner scanCase) {
+        Job occupation = new Job(scanCase);
+       
+        
+       
+    } // end method
+	// get seaport method
+	public SeaPortCMSC335 getSeaPortIndex(int x) {
+            //returning seaport for an index of ports
+        for(SeaPortCMSC335 mainSeaPort: ports) {
+            if(mainSeaPort.index == x) {
+                return mainSeaPort;
+            }
+        }
+        return null;
+    } // end method 
+	//get dock index method
+	public Dock getDockIndex(int x) {
+        for(SeaPortCMSC335 mainSeaPort: ports) {
+            //returning index to dock
+            for(Dock mainDock: mainSeaPort.docks) {
+                if(mainDock.index == x) {
+                    return mainDock;
+                }
+            }
+        }
+        return null;
+    } // end method 
+	//get ship method
+        //return infor to hashmap
+	public Ship getShipIndex(int x, java.util.HashMap <Integer, Ship> hashMapShip) {
+		return hashMapShip.get(x);
+        
+        //return null;
+    } // end method getShipByIndex
+	//get person method
+	public Person getPersonIndex(int x) {
+        for(SeaPortCMSC335 mainSeaPort: ports) {
+            //returning person
+            for(Person multiPersons: mainSeaPort.person) {
+                if(multiPersons.index == x) {
+                    return multiPersons;
+                }
+            }
+        }
+        return null;
+    } // end method 
+	//method for assigning ship
+	public void assignShip(Ship mainShip) {
+            //Dock to ship parent
+        Dock mainDock = getDockIndex(mainShip.parent);
+        if(mainDock == null) {
+            //get main ship parent add and que ships
+            getSeaPortIndex(mainShip.parent).ships.add(mainShip);
+            getSeaPortIndex(mainShip.parent).que.add(mainShip);
+        }
+        else{
+            //main dock instance of main ship
+            mainDock.ship = mainShip; 
+            getSeaPortIndex(mainDock.parent).ships.add(mainShip);
+        }
+    } // end method 
+	//switch case for index,person,ship,port,skill
+	public String search(String type, String target){//start of switch case for type target
+            //switch case looks for type and target through file
+        String searchParam = "";
+        switch(type) {
+            case "Person / Ship / Port":
+                //target for name
+                searchParam += searchName(target);
+                break;
+            case "Number of Index":
+                // check if int
+                try {
+                    //target for index
+                    searchParam += searchIndex(Integer.parseInt(target));
+                }
+                catch(NumberFormatException e) {
+                    searchParam += "The Search Target Is Invalid";
+                }
+                break;
+            case "Person Skill Set":
+                //target for type
+                searchParam += searchType(target);
+                break;
+            default:
+                break;
+        }
+        return searchParam; //return search param based on user selection
+    } // end class 
+	// search name method
+	public String searchName(String target) {
+        for(SeaPortCMSC335 object: ports) {
+            //if name is at target return stirng of target
+            if(object.name.equals(target)) {
+                return object.toString();//return port name
+            }
+            for(Dock dock: object.docks) {
+                //if name is at target return string of target
+                if(dock.name.equals(target)) {
+                    return dock.toString();//return dock name
+                }
+            }
+            for(Ship ship: object.ships) {
+                //ship name is target return string of target
+                if(ship.name.equals(target)) {
+                    return ship.toString();//return ship name
+                }
+            }
+            for(Person people: object.person) {
+                //if person is at taget return target string
+                if(people.name.equals(target)) {
+                    return people.toString();//retunr person name
+                }
+            }
+        }
+        return "Object looking for not found";
+    } //end class 
+	// search index method
+	public String searchIndex(int target) {
+        for(SeaPortCMSC335 object: ports) {
+            //if index port number is traget return target to string
+            if(object.index == target) {
+                return object.toString();//return port
+            }
+            for(Dock dock: object.docks) {
+                //if index dock number is target return target to String
+                if(dock.index == target) {
+                    return dock.toString();//return dock
+                }
+            }
+            for(Ship ship: object.ships) {
+                //if index ship is target return to string target
+                if(object.index == target) {
+                    return ship.toString();//retun ship
+                }
+            }
+            for(Person people: object.person) {
+                //if index person is target return to string target
+                if(people.index == target) {
+                    return people.toString();//retunr person
+                }
+            }
+        }
+        return "Object looking for not found.";
+    } //end class 
+	//search type method
+	public String searchType(String target) {
+            //target " " for string
+        String stringTarget = "";
+        for(SeaPortCMSC335 port: ports) {
+            //if person skill is target return target to string
+            for(Person mp: port.person) {
+                //if user entered skill properly
+                if(mp.skill.equals(target)) { 
+                    stringTarget += mp.toString() + '\n';
+                }
+            }
+        }
+        //if string is target
+        if(stringTarget == "") {
+            return "Object looking for not found";
+        }
+        return stringTarget; // return person skill
+    }
+} // end class 
