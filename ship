@@ -1,0 +1,42 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class Ship extends Thing {
+        // method for ship arrival time port
+	PortTimeCMSC335 portArrival = new PortTimeCMSC335();
+        // method for ship arrivale time dock
+	PortTimeCMSC335 dockArrival = new PortTimeCMSC335();
+        //variable declarations weight , length of hull, width of hull, Que in type double
+	double holdQue, hullLength, totalWeight, hullWidth;
+        //array list for jobs in ship
+	ArrayList <Job> jobs = new ArrayList <Job>();
+	//scanner for ship
+	public Ship(Scanner sc) {
+        super(sc);
+        //if statements for weight, width, length, Que
+        if(sc.hasNextDouble()) {
+            //if Que has next double
+            holdQue = sc.nextDouble();
+        }
+        if(sc.hasNextDouble()) {
+            //if the hull length is nextDouble
+            hullLength = sc.nextDouble();
+        }
+        if(sc.hasNextDouble()) {
+            //if the hull width is nextDouble
+            totalWeight = sc.nextDouble();
+        }
+        if(sc.hasNextDouble()) {
+            // if width is next doouble
+              hullWidth = sc.nextDouble();
+        }
+    } // end 
+	//toString method for ship class to retun a string
+	public String toString() {
+            //concatenate string to toString
+        String string = "Cargo or Passenger: " + super.toString();
+        //return the string searched for
+        return string;
+    } // end method 
+} // end class 
