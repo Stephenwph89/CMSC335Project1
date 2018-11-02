@@ -1,0 +1,60 @@
+/**
+*Stephen Hamilton
+*Class: CMSC 335
+*Section: 7981
+*Instructor: Dinsoreanu, Mihaela
+*Assignment: Project 1 Sea Port
+*Date Started: 10/27/2018
+*Due Date: 11/04/2018
+*/
+import java.util.Scanner;
+
+
+//class Thing comparing objects in class 
+public class ThingCMSC335 implements Comparable <ThingCMSC335> {
+//Variable Declarations for Thing class
+    //int data type variable index for index numbers in file
+	int index;
+    //data type String variable for name of ship, person, port
+	String name;
+    //int data type variable for parent index
+	int parent;
+	//Constructor for class thing
+	public ThingCMSC335() {
+            //variable value " " for name
+		name = "";
+            //variable value 0 for index number start
+		index = 0;
+            //variable value 0 for parent index start
+		parent = 0;
+	} // end no 
+	//Scanner Constructor for class thing
+	public ThingCMSC335(Scanner fileScanner) {
+            //if statement for scanner cnst name
+		if(fileScanner.hasNext()) {
+			name = fileScanner.next();
+		}
+		if(fileScanner.hasNextInt()) {
+             //if statement for scanner cnst index
+			index = fileScanner.nextInt();
+		}
+		if(fileScanner.hasNextInt()) {
+             //if statement for scanner cnst index parent
+			parent = fileScanner.nextInt();
+		}
+	} // end 
+	//toString() method concatenating objects turned to strings in file together in form of output based on user input
+	public String toString() {
+            //Strings in file concatenated
+		String fileString = name + " " + index;
+                //return string as output
+		return fileString;
+	} // end 
+	
+	@Override
+        //compare to method for thing class
+	public int compareTo(ThingCMSC335 o) {
+		
+		return 0;
+	}
+} // end
