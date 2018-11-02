@@ -1,0 +1,47 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+
+public class SeaPortCMSC335 extends Thing {
+        //These array lists are to create a list of items dock, ship, person, also includes a que 
+        // This code is for the list of docks
+	ArrayList <Dock> docks = new ArrayList <Dock>(); 
+        //This code makes a list of ships that are waiting to park in dock
+	ArrayList <Ship> que = new ArrayList <Ship>(); 
+        //This code makes a list of ships
+	ArrayList <Ship> ships = new ArrayList <Ship>(); 
+        //This code is for the people with particular skills at the specific port
+	ArrayList <Person> person = new ArrayList <Person>(); 
+    
+	//class nad method scanner
+	public SeaPortCMSC335(Scanner scanArray) {
+		super(scanArray);
+	}
+	//method toString for objects ---> to string
+	public String toString() {
+        //seaPortString to  super.toSttring() for loop 
+		String seaPortString = "\n\nSeaPort: " + super.toString() + '\n';
+        //dock for loop
+        for(Dock mainDock: docks) {
+            seaPortString += "\n" + mainDock;
+        }
+        seaPortString += "\n\n ---  que for ships looking to dock:";
+        //que for loop
+        for(Ship mainString: que) {
+            seaPortString += "\n  > " + mainString;
+        }
+        seaPortString += "\n\n --- all ships:";
+        //ships for loop
+        for(Ship mainString: ships) {
+            seaPortString += "\n  > " + mainString;
+        }
+        seaPortString += "\n\n --- all persons:";
+        //person for loop
+        for(Person mainPerson: person) {
+            seaPortString += "\n  > " + mainPerson;
+        }
+        //return string after user searches for specific string specified in loops
+        return seaPortString;
+    } // end method 
+} // end class 
