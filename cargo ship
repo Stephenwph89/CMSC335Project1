@@ -1,0 +1,48 @@
+import java.util.Scanner;
+
+
+public class CargoShipCMSC335 extends ShipCMSC335 {
+    //data type double variable declarations for cargoship class
+    // need to use double as per rubric
+    // double amount of cargo variable
+	double amountCargo;
+    //double amount of vaolume cargo variable
+	double amountVolume;
+    //double amount of weight cargo variable
+	double amountWeight;
+	//Scanner Constructor for cargo ship class
+	public CargoShipCMSC335(Scanner scanCargo) {
+        super(scanCargo);
+        //if statement scanning for aount of cargo in file
+        if(scanCargo.hasNextDouble()) {
+            //varaible amount cargo
+            amountCargo = scanCargo.nextDouble();
+        }  
+        //if statment scanning for amount of volume for cargo ship
+        if(scanCargo.hasNextDouble()) {
+            //variable amount of volume
+            amountVolume = scanCargo.nextDouble();
+        }
+        //if statement scanning for amount of weight for cargo ship
+        if(scanCargo.hasNextDouble()) {
+            //variable amount of weight
+            amountWeight  = scanCargo.nextDouble();
+        } 
+    } // end 
+	//toString Method for cargo ship class /object ---> string
+	public String toString() {
+            //Concatenate sttring to method toString()
+        String cargoString = "Cargo ship: " + super.toString();
+        //if statement for jobs string isEmpty()
+        if(jobs.isEmpty()) {
+            //return string for cargo ship
+            return cargoString;
+        }
+        for(JobCMSC335 mainJob: jobs) {
+            //Concatenate String to job 
+            cargoString += "\n   - " + mainJob;
+        }
+        //retunr string
+        return cargoString;
+    } // end 	
+} // end 
