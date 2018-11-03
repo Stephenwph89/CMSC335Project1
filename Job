@@ -1,0 +1,51 @@
+/**
+*Stephen Hamilton
+*Class: CMSC 335
+*Section: 7981
+*Instructor: Dinsoreanu, Mihaela
+*Assignment: Project 1 Sea Port
+*Date Started: 10/27/2018
+*Due Date: 11/04/2018
+*/
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class JobCMSC335 extends ThingCMSC335 {
+//data type double for length of job
+    double lengthOfJob;
+    //Array contains skills of persons
+    ArrayList<String> skill = new ArrayList<String>(); 
+    //Scanner Constructor for job class
+    public JobCMSC335(Scanner jobScanner) {
+        super(jobScanner);
+        //if statement uses double data type and length of job scanner 
+        if (jobScanner.hasNextDouble()) {
+            //length of job variable for job scanner data type double
+            lengthOfJob = jobScanner.nextDouble();
+        }
+        //while loop for job scanner
+        while (jobScanner.hasNext()) {
+            String jobString = jobScanner.next();
+            //checking for repeat of persons job skill
+            for (String mainJob : skill) { 
+                //if staement / if skill equals the string provided by user
+                if (mainJob.equals(jobString)) {
+                    jobString = null;
+                }
+            }
+            //if statement for job string / not equal to null / add the string
+            if (jobString != null) {
+                //add string
+                skill.add(jobString);
+            }
+        }
+    } // end 
+     //toStirng() method for job class / object ---> string
+    public String toString() {
+        //persons job string concatenated to skill
+        String jobString = "Person's Job: " + super.toString() + " " + skill;
+        //return skill as output via user input
+        return jobString;
+    } // end 
+} // end 
